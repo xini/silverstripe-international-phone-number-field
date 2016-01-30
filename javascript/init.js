@@ -5,7 +5,7 @@
 		$.validator.addMethod("internationalPhone", function(phone_number, element) {
 			return this.optional(element) 
 				|| $(element).intlTelInput("isValidNumber");
-		}, "Please enter a correct phone number.");
+		}, "Please enter a valid phone number.");
 
 		// init phone field
 		$(".field.InternationalPhoneNumberField input").intlTelInput({
@@ -22,7 +22,7 @@
 				});
 			 },
 			initialCountry: "auto",
-			// nationalMode: false,
+			nationalMode: false,
 			// numberType: "MOBILE",
 			// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
 			preferredCountries: ['au', 'nz'],
