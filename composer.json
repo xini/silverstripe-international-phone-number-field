@@ -3,6 +3,7 @@
 	"description": "Adds a phone filed using Google's libphonenumber.",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "form", "field", "phone"],
+	"license": "MIT",
 	"authors": [{
 		"name": "Florian Thoma",
 		"homepage": "http://www.innoweb.com.au"
