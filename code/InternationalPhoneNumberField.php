@@ -66,24 +66,28 @@ class InternationalPhoneNumberField extends TextField {
 	public function validate($validator) {
 		$phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
 		try {
-			$numberProto = $phoneUtil->parse($this->value, null);
-			if ($phoneUtil->isValidNumber($numberProto)) {
-				$this->value = $phoneUtil->format($numberProto, \libphonenumber\PhoneNumberFormat::INTERNATIONAL);
-				return true;
+			$this->value = trim($this->value);
+			if ($this->value) {
+				$numberProto = $phoneUtil->parse($this->value, null);
+				if ($phoneUtil->isValidNumber($numberProto)) {
+					$this->value = $phoneUtil->format($numberProto, \libphonenumber\PhoneNumberFormat::INTERNATIONAL);
+				} else {
+					$validator->validationError(
+						$this->name,
+						_t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number.'),
+						'validation'
+					);
+					return false;
+				}
 			}
 		} catch (\libphonenumber\NumberParseException $e) {
 			$validator->validationError(
 				$this->name,
-				_t('InternationalPhoneNumberField.VALIDATIONERROR', 'An error occurred.'),
+				_t('InternationalPhoneNumberField.ERROR', 'An error occurred.'),
 				'validation'
 			);
 			return false;
 		}
-		$validator->validationError(
-			$this->name,
-			_t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number.'),
-			'validation'
-		);
-		return false;
+		return true;
 	}
 }
