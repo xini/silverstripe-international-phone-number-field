@@ -32,12 +32,16 @@ class InternationalPhoneNumberField extends TextField {
 		Requirements::css('international-phone-number-field/lib/intl-tel-input/build/css/intlTelInput.css');
 		Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.min.js');
 		Requirements::javascript(THIRDPARTY_DIR.'/jquery-validate/jquery.validate.min.js');
-		Requirements::combine_files(
-			'InternationalPhoneNumberField.js',
-			array(
-				'international-phone-number-field/lib/intl-tel-input/build/js/intlTelInput.min.js',
-				'international-phone-number-field/javascript/init.js',
-			)
+		Requirements::javascript('international-phone-number-field/lib/intl-tel-input/build/js/intlTelInput.min.js');
+		$token = Config::inst()->get('InternationalPhoneNumberField', 'ipinfo_access_token');
+		$tokenParameter = ($token && strlen($token) > 0 ? '?token=' . $token : '');
+		$protocol = ($token && strlen($token) > 0 ? 'https' : 'http');
+		Requirements::javascriptTemplate(
+		    'international-phone-number-field/javascript/InternationalPhoneNumberField.js',
+		    array(
+		        'TokenParameter' => $tokenParameter,
+		        'Protocol' => $protocol,
+		    )
 		);
 		
 		// call parent

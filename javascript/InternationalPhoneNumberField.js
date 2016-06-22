@@ -18,7 +18,7 @@
 			// dropdownContainer: $("body"),
 			//excludeCountries: ["us"],
 			geoIpLookup: function(callback) {
-				$.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+				$.get('$Protocol://ipinfo.io$TokenParameter', function() {}, "jsonp").always(function(resp) {
 					var countryCode = (resp && resp.country) ? resp.country : "";
 					callback(countryCode);
 				});
