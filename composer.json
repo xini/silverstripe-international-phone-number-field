@@ -10,8 +10,8 @@
 	}],
 	"require":
 	{
-		"silverstripe/framework": "~3.1",
-		"giggsey/libphonenumber-for-php": "7.2.4"
+		"silverstripe/framework": "^3.2",
+		"giggsey/libphonenumber-for-php": "^7.2.4"
 	},
 	"extra": {
 		"installer-name": "international-phone-number-field"
