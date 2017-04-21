@@ -42,8 +42,8 @@ class InternationalPhoneNumberField extends TextField {
 		        'TokenParameter' => $tokenParameter,
 		        'Protocol' => $protocol,
                 'InitialCountry' => Config::inst()->get('InternationalPhoneNumberField', 'initial_country'),
-                'OnlyCountries' => json_encode(Config::inst()->get('InternationalPhoneNumberField', 'only_countries')),
-                'PreferredCountries' => json_encode(Config::inst()->get('InternationalPhoneNumberField', 'preferred_countries'))
+                'OnlyCountries' => str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'only_countries'))),
+                'PreferredCountries' => str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'preferred_countries')))
 		    )
 		);
 
