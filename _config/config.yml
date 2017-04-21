@@ -1,2 +1,5 @@
 InternationalPhoneNumberField:
-  ipinfo_access_token: ''  
+  ipinfo_access_token: ''
+  initial_country: 'auto'
+  only_countries: []
+  preferred_countries: []

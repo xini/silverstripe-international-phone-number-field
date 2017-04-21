@@ -1,12 +1,12 @@
 <?php
 
 class InternationalPhoneNumberField extends TextField {
-	
+
 	public function __construct($name, $title = null, $value = '') {
 		parent::__construct($name, $title, $value);
 		$this->addExtraClass('InternationalPhoneNumberField');
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -25,7 +25,7 @@ class InternationalPhoneNumberField extends TextField {
 			)
 		);
 	}
-	
+
 	public function FieldHolder($properties = array()) {
 
 		// load requirements
@@ -41,14 +41,17 @@ class InternationalPhoneNumberField extends TextField {
 		    array(
 		        'TokenParameter' => $tokenParameter,
 		        'Protocol' => $protocol,
+                'InitialCountry' => Config::inst()->get('InternationalPhoneNumberField', 'initial_country'),
+                'OnlyCountries' => json_encode(Config::inst()->get('InternationalPhoneNumberField', 'only_countries')),
+                'PreferredCountries' => json_encode(Config::inst()->get('InternationalPhoneNumberField', 'preferred_countries'))
 		    )
 		);
-		
+
 		// call parent
 		$html = parent::FieldHolder();
 		return $html;
 	}
-	
+
 	public function setValue($val) {
 		if(empty($val)) {
 			$this->value = null;
@@ -65,8 +68,8 @@ class InternationalPhoneNumberField extends TextField {
 		}
 		return $this;
 	}
-	
-	
+
+
 	public function validate($validator) {
 		$phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
 		try {
@@ -94,4 +97,5 @@ class InternationalPhoneNumberField extends TextField {
 		}
 		return true;
 	}
+
 }
