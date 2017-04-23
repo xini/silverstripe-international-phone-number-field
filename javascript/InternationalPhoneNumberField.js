@@ -23,11 +23,11 @@
 					callback(countryCode);
 				});
 			 },
-			initialCountry: "auto",
+			initialCountry: "$InitialCountry",
 			nationalMode: false,
 			// numberType: "MOBILE",
-			// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-			preferredCountries: ['au', 'nz'],
+			onlyCountries: $OnlyCountries,
+			preferredCountries: $PreferredCountries,
 			utilsScript: "/international-phone-number-field/lib/intl-tel-input/lib/libphonenumber/build/utils.js"
 		});
 
