@@ -10,7 +10,7 @@
 		}
 
 		// init phone field
-		$("input.InternationalPhoneNumberField ").intlTelInput({
+		$("input.InternationalPhoneNumberField").intlTelInput({
 			// allowExtensions: true,
 			// autoFormat: false,
 			// autoHideDialCode: false,
