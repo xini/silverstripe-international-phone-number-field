@@ -1,16 +1,16 @@
 (function($) {
 	$(document).ready(function() {
-		
+
 		// add validator method
 		if ($.validator) {
 			$.validator.addMethod("internationalPhone", function(phone_number, element) {
-				return this.optional(element) 
+				return this.optional(element)
 					|| $(element).intlTelInput("isValidNumber");
 			}, "Please enter a valid phone number.");
 		}
-		
+
 		// init phone field
-		$(".field.InternationalPhoneNumberField input").intlTelInput({
+		$("input.InternationalPhoneNumberField").intlTelInput({
 			// allowExtensions: true,
 			// autoFormat: false,
 			// autoHideDialCode: false,
