@@ -36,14 +36,18 @@ class InternationalPhoneNumberField extends TextField {
 		$token = Config::inst()->get('InternationalPhoneNumberField', 'ipinfo_access_token');
 		$tokenParameter = ($token && strlen($token) > 0 ? '?token=' . $token : '');
 		$protocol = ($token && strlen($token) > 0 ? 'https' : 'http');
+		$initialCountry = Config::inst()->get('InternationalPhoneNumberField', 'initial_country') ?: "''";
+		$onlyCountries = Config::inst()->get('InternationalPhoneNumberField', 'only_countries') ? str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'only_countries'))) : '[]';
+		$preferredCountries = Config::inst()->get('InternationalPhoneNumberField', 'preferred_countries') ? str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'preferred_countries'))) : '[]';
+		
 		Requirements::javascriptTemplate(
 		    'international-phone-number-field/javascript/InternationalPhoneNumberField.js',
 		    array(
 		        'TokenParameter' => $tokenParameter,
 		        'Protocol' => $protocol,
-                'InitialCountry' => Config::inst()->get('InternationalPhoneNumberField', 'initial_country'),
-                'OnlyCountries' => str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'only_countries'))),
-                'PreferredCountries' => str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'preferred_countries')))
+                'InitialCountry' => $initialCountry,
+                'OnlyCountries' => $onlyCountries,
+                'PreferredCountries' => $preferredCountries
 		    )
 		);
 
