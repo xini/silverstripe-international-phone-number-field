@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.1]
+
+* fix loading of empty default config values
+
 ## [2.0.0]
 
 * make javascript configurable in SS config. Removed default preferredCountries, to be configured.
