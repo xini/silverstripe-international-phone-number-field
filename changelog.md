@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.2]
+
+* fix uppercase country codes in config
+
 ## [2.0.1]
 
 * fix loading of empty default config values
