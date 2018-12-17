@@ -44,9 +44,9 @@ class InternationalPhoneNumberField extends TextField
     {
 
         // load requirements
-        Requirements::css('innoweb/international-phone-number-field:client/dist/css/intl-phone-number-field.css');
+        Requirements::css('innoweb/silverstripe-international-phone-number-field:client/dist/css/intl-phone-number-field.css');
 
-        Requirements::javascript('innoweb/international-phone-number-field:client/dist/javascript/intl-phone-number-library.js');
+        Requirements::javascript('innoweb/silverstripe-international-phone-number-field:client/dist/javascript/intl-phone-number-library.js');
         
         $IPLocationAPIKey = Config::inst()->get(InternationalPhoneNumberField::class, 'geolocation_api_key');
         $IPLocationAPIURL = '';
@@ -69,7 +69,7 @@ class InternationalPhoneNumberField extends TextField
         $excludedCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries')))) : '[]';
         
         Requirements::javascriptTemplate(
-            'innoweb/international-phone-number-field:client/dist/javascript/intl-phone-number-field.js',
+            'innoweb/silverstripe-international-phone-number-field:client/dist/javascript/intl-phone-number-field.js',
             array(
                 'APIURL' => $IPLocationAPIURL,
                 'APIReplyKey' => $IPLocationReplyKey,
