@@ -1,4 +1,4 @@
-InternationalPhoneNumberField:
+Innoweb\InternationalPhoneNumberField\InternationalPhoneNumberField:
   geolocation_service: false
   geolocation_api_key: false
   geolocation_protocol: 'https'

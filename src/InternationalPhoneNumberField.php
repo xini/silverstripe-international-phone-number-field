@@ -48,12 +48,12 @@ class InternationalPhoneNumberField extends TextField
 
         Requirements::javascript('innoweb/international-phone-number-field:client/dist/javascript/intl-phone-number-library.js');
         
-        $IPLocationAPIKey = Config::inst()->get('InternationalPhoneNumberField', 'geolocation_api_key');
+        $IPLocationAPIKey = Config::inst()->get(InternationalPhoneNumberField::class, 'geolocation_api_key');
         $IPLocationAPIURL = '';
         $IPLocationReplyKey = 'country';
         if ($IPLocationAPIKey) {
-            $IPLocationService = Config::inst()->get('InternationalPhoneNumberField', 'geolocation_service');
-            $protocol = Config::inst()->get('InternationalPhoneNumberField', 'geolocation_protocol');
+            $IPLocationService = Config::inst()->get(InternationalPhoneNumberField::class, 'geolocation_service');
+            $protocol = Config::inst()->get(InternationalPhoneNumberField::class, 'geolocation_protocol');
             if ($IPLocationService == 'ipstack') {
                 $IPLocationAPIURL = Controller::join_links($protocol.'://api.ipstack.com', 'check', '?access_key='.$IPLocationAPIKey);
                 $IPLocationReplyKey = 'country_code';
@@ -63,10 +63,10 @@ class InternationalPhoneNumberField extends TextField
             }
         }
         
-        $initialCountry = Config::inst()->get('InternationalPhoneNumberField', 'initial_country') ? strtolower(Config::inst()->get('InternationalPhoneNumberField', 'initial_country')) : "'auto'";
-        $onlyCountries = Config::inst()->get('InternationalPhoneNumberField', 'only_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'only_countries')))) : '[]';
-        $preferredCountries = Config::inst()->get('InternationalPhoneNumberField', 'preferred_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'preferred_countries')))) : '[]';
-        $excludedCountries = Config::inst()->get('InternationalPhoneNumberField', 'excluded_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get('InternationalPhoneNumberField', 'excluded_countries')))) : '[]';
+        $initialCountry = Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country') ? strtolower(Config::inst()->get('InternationalPhoneNumberField', 'initial_country')) : "'auto'";
+        $onlyCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'only_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'only_countries')))) : '[]';
+        $preferredCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'preferred_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'preferred_countries')))) : '[]';
+        $excludedCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries')))) : '[]';
         
         Requirements::javascriptTemplate(
             'innoweb/international-phone-number-field:client/dist/javascript/intl-phone-number-field.js',
