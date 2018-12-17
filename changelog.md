@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0]
+
+* Upgrade to SilverStripe 4.x
+* Change License from MIT to BSD 3-Clause
+* Add support for ipstack geo location
+* remove jQuery dependency
+
 ## [2.0.2]
 
 * fix uppercase country codes in config

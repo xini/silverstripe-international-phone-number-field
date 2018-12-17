@@ -1,19 +1,30 @@
 {
-	"name": "xini/silverstripe-international-phone-number-field",
+	"name": "innoweb/silverstripe-international-phone-number-field",
 	"description": "Adds a phone filed using Google's libphonenumber.",
-	"type": "silverstripe-module",
-	"keywords": ["silverstripe", "form", "field", "phone"],
-	"license": "MIT",
+	"type": "silverstripe-vendormodule",
+	"keywords": ["silverstripe", "form", "field", "phone", "international"],
+	"license": "BSD-3-Clause",
 	"authors": [{
 		"name": "Florian Thoma",
 		"homepage": "http://www.innoweb.com.au"
 	}],
 	"require":
 	{
-		"silverstripe/framework": "~3.1",
-		"giggsey/libphonenumber-for-php": "^7.2.4"
+		"silverstripe/framework": "^4",
+		"silverstripe/vendor-plugin": "^1",
+		"giggsey/libphonenumber-for-php": "^8.9.14"
 	},
-	"extra": {
-		"installer-name": "international-phone-number-field"
+	"replace": {
+		"xini/silverstripe-international-phone-number-field": "self.version"
+	},
+	"autoload": {
+		"psr-4": {
+			"Innoweb\\InternationalPhoneNumberField\\": "src/"
+		}
+    },
+    "extra": {
+        "expose": [
+            "client/dist"
+        ]
 	}
 }

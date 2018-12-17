@@ -9,5 +9,6 @@
 ## Contributor license agreement
 By supplying code to this module in patches, tickets and pull requests, you agree to assign copyright 
 of that code to Florian Thoma, on the condition that these code changes are released under the 
-same MIT license as the original module. We ask for this so that the ownership in the license is clear 
-and unambiguous. 
+same BSD license as the original module. We ask for this so that the ownership in the license is clear 
+and unambiguous. By releasing this code under a permissive license such as BSD, this copyright assignment 
+won't prevent you from using the code in any way you see fit.

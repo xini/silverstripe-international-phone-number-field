@@ -1,5 +1,8 @@
 InternationalPhoneNumberField:
-  ipinfo_access_token: ''
+  geolocation_service: false
+  geolocation_api_key: false
+  geolocation_protocol: 'https'
   initial_country: 'auto'
   only_countries: []
   preferred_countries: []
+  excluded_countries: []
