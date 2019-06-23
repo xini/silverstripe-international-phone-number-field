@@ -47,7 +47,7 @@ class InternationalPhoneNumberField extends TextField
         Requirements::css('innoweb/silverstripe-international-phone-number-field:client/dist/css/intl-phone-number-field.css');
 
         Requirements::javascript('innoweb/silverstripe-international-phone-number-field:client/dist/javascript/intl-phone-number-library.js');
-        
+
         $IPLocationAPIKey = Config::inst()->get(InternationalPhoneNumberField::class, 'geolocation_api_key');
         $IPLocationAPIURL = '';
         $IPLocationReplyKey = 'country';
@@ -62,12 +62,12 @@ class InternationalPhoneNumberField extends TextField
                 $IPLocationReplyKey = 'country';
             }
         }
-        
+
         $initialCountry = Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country') ? strtolower(Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country')) : "'auto'";
         $onlyCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'only_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'only_countries')))) : '[]';
         $preferredCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'preferred_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'preferred_countries')))) : '[]';
         $excludedCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries')))) : '[]';
-        
+
         Requirements::javascriptTemplate(
             'innoweb/silverstripe-international-phone-number-field:client/dist/javascript/intl-phone-number-field.js',
             array(
@@ -97,7 +97,7 @@ class InternationalPhoneNumberField extends TextField
                     $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
                 }
             } catch (NumberParseException $e) {
-                $this->value = null;
+                $this->value = $value;
             }
         }
         return $this;
@@ -125,7 +125,7 @@ class InternationalPhoneNumberField extends TextField
         } catch (NumberParseException $e) {
             $validator->validationError(
                 $this->name,
-                _t('InternationalPhoneNumberField.ERROR', 'An error occurred.'),
+                _t('InternationalPhoneNumberField.ERROR', $e->getMessage()),
                 'validation'
             );
             return false;
