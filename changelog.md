@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.2]
+
+* fix PHP validation
+* improve validation error message 
+* ugrade frontend build to gulp 4
+
 ## [3.0.1]
 
 * fix ipstack API URL 
