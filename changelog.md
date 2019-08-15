@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.3]
+
+* make all paths relative to fix issue with configurable resources path
+
 ## [3.0.2]
 
 * fix PHP validation

@@ -31,7 +31,7 @@
 				onlyCountries: $OnlyCountries,
 				preferredCountries: $PreferredCountries,
 				excludeCountries: $ExcludedCountries,
-				utilsScript: "/resources/vendor/innoweb/silverstripe-international-phone-number-field/client/dist/javascript/utils.js"
+				utilsScript: "./utils.js"
 			});
 		});
 		

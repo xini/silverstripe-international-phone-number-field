@@ -15,7 +15,6 @@ const uglify = require('gulp-uglify');
 const paths = {
 	"src": "./src/",
 	"dist": "./dist/",
-	"absoluteBase": "/resources/vendor/innoweb/silverstripe-international-phone-number-field",
 	
 	"styles": {
 		"src": "scss/",
@@ -53,13 +52,13 @@ const sassOptions = {
 };
 
 const autoprefixerOptions = {
-    browsers: ['last 2 versions', '> 1%', 'IE >= 9'],
+    browserlist: ['last 2 versions', '> 1%', 'IE >= 9'],
     cascade: false,
     supports: false
 };
 
 function styles(cb) {
-	return src(paths.src + paths.styles.src + paths.styles.filter)
+	src(paths.src + paths.styles.src + paths.styles.filter)
 	    .pipe(plumber({
 	        errorHandler: onError
 	    }))
@@ -68,16 +67,14 @@ function styles(cb) {
 	    .pipe(sass(sassOptions).on('error', sass.logError))
 	    .pipe(autoprefixer(autoprefixerOptions))
 	    .pipe(cleancss({processImport: true, keepSpecialComments: 0}))
-	    .pipe(sourcemaps.write('.', {
-	        sourceMappingURLPrefix: paths.absoluteBase + '/' + paths.styles.dist
-	    }))
+		.pipe(sourcemaps.write('.'))
 	    .pipe(dest(paths.dist + paths.styles.dist));
 	cb();
 }
 
 function cleanStyles(cb) {
-    return del([
-    	paths.dist + paths.styles.dist
+    del([
+    	paths.dist + paths.styles.dist + "*.(css|map)"
     ]);
 	cb();
 }
@@ -85,7 +82,7 @@ function cleanStyles(cb) {
 function scripts(cb) {
 	var scriptNames = Object.keys(scriptFiles);
 	scriptNames.forEach(function(scriptName) {
-		return src(
+		src(
                 scriptFiles[scriptName],
                 {
                     cwd: path.join(process.cwd(), './'),
@@ -99,23 +96,21 @@ function scripts(cb) {
             .pipe(concat(scriptName))
             .pipe(stripdebug())
             .pipe(uglify({mangle: false}))
-            .pipe(sourcemaps.write('.', {
-                sourceMappingURLPrefix: paths.absoluteBase + '/' + paths.scripts.dist
-            }))
+            .pipe(sourcemaps.write('.'))
             .pipe(dest(paths.dist + paths.scripts.dist));
 	});
 	cb();
 }
 
 function cleanScripts(cb) {
-	return del([
-		paths.dist + paths.scripts.dist
+	del([
+		paths.dist + paths.scripts.dist + "*.(js|map)"
 	]);
 	cb();
 }
 
 function images(cb) {
-	return src(paths.images.src + paths.images.filter)
+	src(paths.images.src + paths.images.filter)
 	    .pipe(plumber({
 	        errorHandler: onError
 	    }))
@@ -124,7 +119,7 @@ function images(cb) {
 }
 
 function cleanImages(cb) {
-	return del([
+	del([
 		paths.dist + paths.images.dist + paths.images.filter
 	]);
 	cb();
