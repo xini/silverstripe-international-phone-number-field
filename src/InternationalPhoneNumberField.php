@@ -13,6 +13,7 @@ use libphonenumber\PhoneNumberUtil;
 
 class InternationalPhoneNumberField extends TextField
 {
+    protected $initialCountry;
 
     public function __construct($name, $title = null, $value = '')
     {
@@ -41,6 +42,17 @@ class InternationalPhoneNumberField extends TextField
         );
     }
 
+    public function setInitialCountry($countryCode)
+    {
+        $this->initialCountry = strtolower($countryCode);
+        return $this;
+    }
+
+    public function getInitialCountry()
+    {
+        return $this->initialCountry;
+    }
+
     public function FieldHolder($properties = array())
     {
 
@@ -64,7 +76,10 @@ class InternationalPhoneNumberField extends TextField
             }
         }
 
-        $initialCountry = Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country') ? strtolower(Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country')) : "'auto'";
+        $initialCountry = $this->getInitialCountry();
+        if (!$initialCountry) {
+            $initialCountry = Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country') ? strtolower(Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country')) : "'auto'";
+        }
         $onlyCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'only_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'only_countries')))) : '[]';
         $preferredCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'preferred_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'preferred_countries')))) : '[]';
         $excludedCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries') ? strtolower(str_replace('"', "'", json_encode(Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries')))) : '[]';
