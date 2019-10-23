@@ -4,6 +4,7 @@ namespace Innoweb\InternationalPhoneNumberField;
 
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Forms\TextField;
 use SilverStripe\View\Requirements;
 use libphonenumber\NumberParseException;
@@ -77,6 +78,7 @@ class InternationalPhoneNumberField extends TextField
                 'OnlyCountries' => $onlyCountries,
                 'PreferredCountries' => $preferredCountries,
                 'ExcludedCountries' => $excludedCountries,
+                'UtilsScriptURL' => ModuleResourceLoader::resourceURL('innoweb/silverstripe-international-phone-number-field:client/dist/javascript/utils.js')
             )
         );
 

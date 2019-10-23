@@ -31,7 +31,7 @@
 				onlyCountries: $OnlyCountries,
 				preferredCountries: $PreferredCountries,
 				excludeCountries: $ExcludedCountries,
-				utilsScript: "./utils.js"
+				utilsScript: "$UtilsScriptURL"
 			});
 		});
 		
