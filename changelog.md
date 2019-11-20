@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.4]
+
+* Fix utils.js and allow setting initial country from back-end
+* fix ipstack API URL for js call
+
 ## [3.0.3]
 
 * make all paths relative to fix issue with configurable resources path
