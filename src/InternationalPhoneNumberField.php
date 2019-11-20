@@ -68,7 +68,7 @@ class InternationalPhoneNumberField extends TextField
             $IPLocationService = Config::inst()->get(InternationalPhoneNumberField::class, 'geolocation_service');
             $protocol = Config::inst()->get(InternationalPhoneNumberField::class, 'geolocation_protocol');
             if ($IPLocationService == 'ipstack') {
-                $IPLocationAPIURL = Controller::join_links($protocol.'://api.ipstack.com', '?access_key='.$IPLocationAPIKey);
+                $IPLocationAPIURL = Controller::join_links($protocol.'://api.ipstack.com', 'check', '?access_key='.$IPLocationAPIKey);
                 $IPLocationReplyKey = 'country_code';
             } else if ($IPLocationService == 'ipinfo') {
                 $IPLocationAPIURL = Controller::join_links($protocol.'://ipinfo.io', '?token='.$IPLocationAPIKey);
