@@ -15,7 +15,7 @@ const uglify = require('gulp-uglify');
 const paths = {
 	"src": "./src/",
 	"dist": "./dist/",
-	
+
 	"styles": {
 		"src": "scss/",
 		"filter": "/**/*.+(scss)",
@@ -95,7 +95,7 @@ function scripts(cb) {
             .pipe(sourcemaps.init())
             .pipe(concat(scriptName))
             .pipe(stripdebug())
-            .pipe(uglify({mangle: false}))
+            .pipe(uglify({mangle: false, compress: false}))
             .pipe(sourcemaps.write('.'))
             .pipe(dest(paths.dist + paths.scripts.dist));
 	});

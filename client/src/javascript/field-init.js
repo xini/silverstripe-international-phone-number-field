@@ -4,10 +4,14 @@
 	function initInternationalPhoneField() {
 		// init phone fields
 		var fields = document.querySelectorAll('input.InternationalPhoneNumberField');
-		
+
 		// define geo lookup function
 		var geoLookup = null;
-		if ('$APIURL'.length > 0) {
+        var initialCountry = "$InitialCountry";
+        if (
+            '$APIURL'.length > 0
+            && (typeof initialCountry === 'undefined' || initialCountry === 'auto')
+        ) {
 			geoLookup = function(callback) {
 				var xhr = new XMLHttpRequest();
 				xhr.open('GET', '$APIURL');
@@ -22,21 +26,21 @@
 				xhr.send();
 			};
 		}
-		
+
 		Array.prototype.forEach.call(fields, function (field) {
 			window.intlTelInput(field, {
 				geoIpLookup: geoLookup,
-				initialCountry: "$InitialCountry",
+                initialCountry: initialCountry,
 				nationalMode: false,
 				onlyCountries: $OnlyCountries,
 				preferredCountries: $PreferredCountries,
 				excludeCountries: $ExcludedCountries,
-				utilsScript: "./utils.js"
+				utilsScript: "$UtilsScriptURL"
 			});
 		});
-		
+
 	}
-	
+
 	if (document.readyState === "loading") {  // Loading hasn't finished yet
 		document.addEventListener("DOMContentLoaded", initInternationalPhoneField);
 	} else {  // `DOMContentLoaded` has already fired
