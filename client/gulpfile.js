@@ -95,7 +95,10 @@ function scripts(cb) {
             .pipe(sourcemaps.init())
             .pipe(concat(scriptName))
             .pipe(stripdebug())
-            .pipe(uglify({mangle: false, compress: { dead_code: false }}))
+            .pipe(uglify({
+				mangle: false, 
+				compress: false
+			}))
             .pipe(sourcemaps.write('.'))
             .pipe(dest(paths.dist + paths.scripts.dist));
 	});
