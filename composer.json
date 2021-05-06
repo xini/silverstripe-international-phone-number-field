@@ -2,11 +2,11 @@
 	"name": "innoweb/silverstripe-international-phone-number-field",
 	"description": "Adds a phone filed using Google's libphonenumber.",
 	"type": "silverstripe-vendormodule",
-	"keywords": ["silverstripe", "form", "field", "phone", "international"],
+	"keywords": ["silverstripe", "form", "database", "field", "phone", "international", "geo-location"],
 	"license": "BSD-3-Clause",
 	"authors": [{
 		"name": "Florian Thoma",
-		"homepage": "http://www.innoweb.com.au"
+		"homepage": "https://www.innoweb.com.au"
 	}],
 	"require":
 	{

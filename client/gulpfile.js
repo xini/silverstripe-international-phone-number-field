@@ -34,15 +34,13 @@ const paths = {
 };
 
 const scriptFiles = {
-	"utils.js": [
+	"intl-phone-number-utils.js": [
 		"node_modules/intl-tel-input/build/js/utils.js"
 	],
-	"intl-phone-number-library.js": [
-		"node_modules/intl-tel-input/build/js/intlTelInput.js"
-	],
 	"intl-phone-number-field.js": [
+		"node_modules/intl-tel-input/build/js/intlTelInput.js",
 		"src/javascript/jquery-validator.js",
-		"src/javascript/field-init.js",
+		"src/javascript/field-init.js"
 	]
 }
 

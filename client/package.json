@@ -7,19 +7,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Florian Thoma",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "intl-tel-input": "^17.0.0"
+  },
   "devDependencies": {
-    "del": "^5.0.0",
+    "del": "^6.0.0",
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^6.1.0",
-    "gulp-clean-css": "^4.2.0",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.3.0",
     "gulp-concat-util": "^0.5.5",
     "gulp-cssimport": "^7.0.0",
     "gulp-plumber": "^1.2.1",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-strip-debug": "^3.0.0",
-    "gulp-uglify": "^3.0.2",
-    "intl-tel-input": "^16.0.2"
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-strip-debug": "^4.0.0",
+    "gulp-uglify": "^3.0.2"
   }
 }

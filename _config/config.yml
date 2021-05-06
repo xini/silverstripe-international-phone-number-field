@@ -1,8 +1,13 @@
-Innoweb\InternationalPhoneNumberField\InternationalPhoneNumberField:
-  geolocation_service: false
-  geolocation_api_key: false
-  geolocation_protocol: 'https'
-  initial_country: 'auto'
-  only_countries: []
-  preferred_countries: []
-  excluded_countries: []
+---
+Name: international-phone-number-field
+---
+
+SilverStripe\Core\Injector\Injector:
+  Phone:
+    class: Innoweb\InternationalPhoneNumberField\ORM\DBPhone
+    
+SilverStripe\Admin\LeftAndMain:
+  extra_requirements_css:
+    - innoweb/silverstripe-international-phone-number-field:client/dist/css/intl-phone-number-field.css
+  extra_requirements_javascript:
+    - innoweb/silverstripe-international-phone-number-field:client/dist/javascript/intl-phone-number-field.js

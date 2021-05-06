@@ -5,12 +5,14 @@
 
 ## Introduction
 
-Adds a form field for international phone numbers using [Google's libphonenumber] (https://github.com/googlei18n/libphonenumber) and the [jQuery intl-tel-input plugin] (https://github.com/jackocnr/intl-tel-input).
+Adds a database and form field for international phone numbers using [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) and the [intl-tel-input plugin](https://github.com/jackocnr/intl-tel-input).
+
+Geo location supported using [ipstack.com](https://ipstack.com) or [ipinfo.io](https://ipinfo.io).
 
 ## Requirements
 
- * SilverStripe ^4
- * [libphonenumber port for PHP ^8.9] (https://github.com/giggsey/libphonenumber-for-php)
+ * Silverstripe ^4
+ * [libphonenumber port for PHP ^8](https://github.com/giggsey/libphonenumber-for-php)
 
 ## Installation
 
@@ -20,17 +22,46 @@ composer require innoweb/silverstripe-international-phone-number-field dev-maste
 ```
 Then run dev/build.
 
+## Usage
+
+### Database field
+
+This module provides a database field to be used for data objects:
+
+```
+private static $db = [
+	...
+	'PhoneNumber' => 'Phone',
+	...
+];
+```
+
+This stores the phone number in the database as a varchar. 
+
+In the CMS the data type `Phone` renders as a `InternationalPhoneNumberField`. 
+
+In templates, the following formatting functions are available:
+
+* `$PhoneNumber.International`: Returns the phone number in international format, e.g. "+41 44 668 1800"
+* `$PhoneNumber.National`: Returns the phone number in national format, e.g. "044 668 1800"
+* `$PhoneNumber.E164`: Returns the phone number in international format, but with no formatting applied, e.g. "+41446681800"
+* `$PhoneNumber.URL` or `$PhoneNumber.RFC3966`: Returns the phone number in international format, but with all spaces and other separating symbols replaced with a hyphen, and with any phone number extension appended with ";ext=". It also will have a prefix of "tel:" added, e.g. "tel:+41-44-668-1800".
+
+### Form field
+
+The `InternationalPhoneNumberField` can be used for any Varchar field storing a phone number. 
+
 ## Configuration
 
-In your project config you can configure the following options for the `InternationalPhoneNumberField` class:
+To set the field to use the user's current location as default and customise the field, you can configure the following options for the `InternationalPhoneNumberField` class:
 
 * `geolocation_service`: Uses IP location to determine the current users's country code. This can be either `'ipstack'` or `'ipinfo'`. Defaults to `false`.
-* `geolocation_api_key`: API key for [ipstack.com] (https://ipstack.com) or [ipinfo.io] (https://ipinfo.io).
+* `geolocation_api_key`: API key for [ipstack.com](https://ipstack.com) or [ipinfo.io](https://ipinfo.io).
 * `geolocation_protocol`: Protocol to be used to connecto to geolocation service. Defaults to `'https'`.
-* `initial_country`: country code for initially shown country in the phone number field. deafults to `'auto'`, in which case the location is determined using geolocation if that's set up.
-* `only_countries`: array of country codes available for selection. Defaults to all countries.
-* `preferred_countries`: array of country codes pushed to the top of the dropdown list. Deafults to none, all countries are listed alphabetically.
-* `excluded_countries`: array of country codes to be excluded from the dropdown lost. Deafults to none.
+* `initial_country`: Country code for initially shown country in the phone number field. Defaults to `'auto'`, in which case the location is determined using geolocation if that's set up.
+* `only_countries`: Array of country codes available for selection. Defaults to `false`, all countries are listed.
+* `preferred_countries`: Array of country codes pushed to the top of the dropdown list. Defaults to `false`, all countries are listed alphabetically.
+* `excluded_countries`: Array of country codes to be excluded from the dropdown lost. Defaults to `false`, all countries are listed.
 
 ## License
 
