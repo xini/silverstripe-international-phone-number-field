@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.2]
+
+* fix db field for empty phone number
+
 ## [4.0.1]
 
 * update frontend dependencies

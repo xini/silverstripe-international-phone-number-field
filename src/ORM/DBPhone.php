@@ -57,11 +57,11 @@ class DBPhone extends DBField
             $numberProto = $phoneUtil->parse($value, null);
             if ($phoneUtil->isValidNumber($numberProto)) {
                 $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
+            } else {
+                $this->value = null;
             }
         } catch (NumberParseException $e) {
-            throw new InvalidArgumentException(
-                "Invalid phone number: '$value'."
-            );
+            $this->value = null;
         }
         return $this;
     }
