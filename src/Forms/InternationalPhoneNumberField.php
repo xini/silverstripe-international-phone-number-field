@@ -17,7 +17,7 @@ class InternationalPhoneNumberField extends TextField
      * @config
      * @var String|false $geolocation_service IP location service to determine the current users's country code. This can be either 'ipstack' or 'ipinfo'. Defaults to 'false'.
      */
-    private static $geolocation_service = false;
+    private static $geolocation_service = 'freegeoip';
 
     /**
      * @config
@@ -92,6 +92,15 @@ class InternationalPhoneNumberField extends TextField
             } else if ($IPLocationService == 'ipinfo') {
                 $IPLocationAPIURL = Controller::join_links($protocol.'://ipinfo.io', '?token='.$IPLocationAPIKey);
                 $IPLocationReplyKey = 'country';
+            } else if ($IPLocationService == 'abstract') {
+                $IPLocationAPIURL = Controller::join_links($protocol.'://ipgeolocation.abstractapi.com/v1/', '?api_key='.$IPLocationAPIKey);
+                $IPLocationReplyKey = 'country_code';
+            } else if ($IPLocationService == 'ipgeolocation') {
+                $IPLocationAPIURL = Controller::join_links($protocol.'://api.ipgeolocation.io/ipgeo', '?apiKey='.$IPLocationAPIKey);
+                $IPLocationReplyKey = 'country_code2';
+            } else if ($IPLocationService == 'freegeoip') {
+                $IPLocationAPIURL = Controller::join_links($protocol.'://freegeoip.app/json/');
+                $IPLocationReplyKey = 'country_code';
             }
         }
 
