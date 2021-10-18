@@ -53,12 +53,10 @@
 			
 			// Update hidden field value with phone number if correct, otherwise just copy value. Validation happens on server.
 			var handleChange = function() {
-				if (field.value.trim()) {
-					if (iti.isValidNumber()) {
-						hiddenField.value = iti.getNumber();
-					} else {
-						hiddenField.value = field.value;
-					}
+				if (iti.isValidNumber()) {
+					hiddenField.value = iti.getNumber();
+				} else {
+					hiddenField.value = field.value.trim();
 				}
 			};
 			field.addEventListener('change', handleChange);

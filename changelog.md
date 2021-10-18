@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.1]
+
+* fix submission of data if phone number is not correct or empty
+
 ## [4.2.0]
 
 * switch to national mode for better usability, use hidden field to submit complete phone number to the server
