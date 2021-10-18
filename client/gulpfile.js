@@ -41,6 +41,10 @@ const scriptFiles = {
 		"node_modules/intl-tel-input/build/js/intlTelInput.js",
 		"src/javascript/jquery-validator.js",
 		"src/javascript/field-init.js"
+	],
+	"intl-phone-number-field-validation.js": [
+		"node_modules/libphonenumber-js/bundle/libphonenumber-min.js",
+		"src/javascript/bouncer-validator.js"
 	]
 }
 

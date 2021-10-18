@@ -9,7 +9,8 @@
   "author": "Florian Thoma",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "intl-tel-input": "^17.0.13"
+    "intl-tel-input": "^17.0.13",
+    "libphonenumber-js": "^1.9.38"
   },
   "devDependencies": {
     "del": "^6.0.0",

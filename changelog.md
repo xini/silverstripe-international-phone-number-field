@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.0]
+
+* add js field validation compatible with https://github.com/xini/silverstripe-form-validation
+
 ## [4.2.1]
 
 * fix submission of data if phone number is not correct or empty
