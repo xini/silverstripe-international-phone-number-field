@@ -9,8 +9,8 @@
   "author": "Florian Thoma",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "intl-tel-input": "^17.0.13",
-    "libphonenumber-js": "^1.9.38"
+    "intl-tel-input": "^17.0.16",
+    "libphonenumber-js": "^1.9.51"
   },
   "devDependencies": {
     "del": "^6.0.0",
@@ -24,6 +24,6 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-strip-debug": "^4.0.0",
     "gulp-uglify": "^3.0.2",
-    "sass": "^1.43.2"
+    "sass": "^1.50.1"
   }
 }
