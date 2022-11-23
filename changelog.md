@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.2]
+
+* remove support for Abstract Geolocation API
+
 ## [4.3.1]
 
 * update frontend dependencies

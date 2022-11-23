@@ -10,7 +10,6 @@ Adds a database and form field for international phone numbers using [Google's l
 IP Geo Location services supported:
 * [ipstack.com](https://ipstack.com)
 * [ipinfo.io](https://ipinfo.io)
-* [Abstract](https://www.abstractapi.com/ip-geolocation-api)
 * [ipgeolocation](https://ipgeolocation.io/)
 * [freegeoip](https://freegeoip.app/) (default)
 
@@ -60,8 +59,8 @@ The `InternationalPhoneNumberField` can be used for any Varchar field storing a 
 
 To set the field to use the user's current location as default and customise the field, you can configure the following options for the `InternationalPhoneNumberField` class:
 
-* `geolocation_service`: Uses IP location to determine the current users's country code. This can be `'ipstack'`, `'ipinfo'`, `'abstract'`, `'ipgeolocation'` or `'freegeoip'`. Defaults to `'freegeoip'`.
-* `geolocation_api_key`: API key for [ipstack.com](https://ipstack.com), [ipinfo.io](https://ipinfo.io), [Abstract](https://www.abstractapi.com/ip-geolocation-api) or [ipgeolocation](https://ipgeolocation.io/). Defaults to `false`.
+* `geolocation_service`: Uses IP location to determine the current users's country code. This can be `'ipstack'`, `'ipinfo'`, `'ipgeolocation'` or `'freegeoip'`. Defaults to `'freegeoip'`.
+* `geolocation_api_key`: API key for [ipstack.com](https://ipstack.com), [ipinfo.io](https://ipinfo.io) or [ipgeolocation](https://ipgeolocation.io/). Defaults to `false`.
 * `geolocation_protocol`: Protocol to be used to connecto to geolocation service. Defaults to `'https'`.
 * `initial_country`: Country code for initially shown country in the phone number field. Defaults to `'auto'`, in which case the location is determined using geolocation if that's set up.
 * `only_countries`: Array of country codes available for selection. Defaults to `false`, all countries are listed.
