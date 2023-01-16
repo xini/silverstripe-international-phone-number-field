@@ -169,28 +169,30 @@ class InternationalPhoneNumberField extends TextField
     public function validate($validator)
     {
         $phoneUtil = PhoneNumberUtil::getInstance();
-        try {
-            $this->value = trim($this->value);
-            if ($this->value) {
-                $numberProto = $phoneUtil->parse($this->value, null);
-                if ($phoneUtil->isValidNumber($numberProto)) {
-                    $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
-                } else {
-                    $validator->validationError(
-                        $this->name,
-                        _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
-                        'validation'
-                    );
-                    return false;
+        if ($this->value) {
+            try {
+                $this->value = trim($this->value);
+                if ($this->value) {
+                    $numberProto = $phoneUtil->parse($this->value, null);
+                    if ($phoneUtil->isValidNumber($numberProto)) {
+                        $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
+                    } else {
+                        $validator->validationError(
+                            $this->name,
+                            _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
+                            'validation'
+                        );
+                        return false;
+                    }
                 }
+            } catch (NumberParseException $e) {
+                $validator->validationError(
+                    $this->name,
+                    _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
+                    'validation'
+                );
+                return false;
             }
-        } catch (NumberParseException $e) {
-            $validator->validationError(
-                $this->name,
-                _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
-                'validation'
-            );
-            return false;
         }
         return true;
     }
