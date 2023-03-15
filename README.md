@@ -15,8 +15,10 @@ IP Geo Location services supported:
 
 ## Requirements
 
- * Silverstripe ^4
+ * Silverstripe ^5
  * [libphonenumber port for PHP ^8](https://github.com/giggsey/libphonenumber-for-php)
+ 
+ Note: this version is compatible with SilverStripe 5. For SilverStripe 4, please see the [4 release line](https://github.com/xini/silverstripe-international-phone-number-field/tree/4).
 
 ## Installation
 

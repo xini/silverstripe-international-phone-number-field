@@ -1,6 +1,6 @@
 {
   "name": "silverstripe-international-phone-number-field",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,8 @@
   "author": "Florian Thoma",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "intl-tel-input": "^17.0.16",
-    "libphonenumber-js": "^1.9.51"
+    "intl-tel-input": "^17.0.21",
+    "libphonenumber-js": "^1.10.24"
   },
   "devDependencies": {
     "del": "^6.0.0",

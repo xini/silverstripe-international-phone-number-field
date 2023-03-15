@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0]
+
+* add Silverstripe 5 compatibility
+
 ## [4.3.4]
 
 * PHP 8.1 compatibility: ensure field has value before validation attempt
