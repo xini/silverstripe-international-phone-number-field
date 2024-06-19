@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0]
+
+* update frontend dependencies to gulp 5
+
 ## [5.0.0]
 
 * add Silverstripe 5 compatibility

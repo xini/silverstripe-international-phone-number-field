@@ -1,13 +1,13 @@
 ;(function () {
 	'use strict';
 
-	function initInternationalPhoneField() {
-		
+	const initInternationalPhoneField = function() {
+
 		// init phone fields
 		var fields = document.querySelectorAll('input.InternationalPhoneNumberField');
 
 		Array.prototype.forEach.call(fields, function (field) {
-			
+
 			// define geo lookup function
 			var geoLookup = null;
 			var initialCountry = field.getAttribute('data-initialcountry');
@@ -29,7 +29,7 @@
 					xhr.send();
 				};
 			}
-			
+
 			// create hidden field for data submission
 			var fieldname = field.getAttribute('name');
 			var hiddenField = document.createElement("input");
@@ -40,7 +40,7 @@
 			field.setAttribute('name', fieldname + '_itl');
 			// insert hidden field
 			field.parentElement.appendChild(hiddenField);
-			
+
 			var iti = window.intlTelInput(field, {
 				geoIpLookup: geoLookup,
 				initialCountry: initialCountry,
@@ -50,7 +50,7 @@
 				excludeCountries: field.getAttribute('data-excludedcountries') ? field.getAttribute('data-excludedcountries').split('-') : [],
 				utilsScript: field.getAttribute('data-utilsscripturl'),
 			});
-			
+
 			// Update hidden field value with phone number if correct, otherwise just copy value. Validation happens on server.
 			var handleChange = function() {
 				if (iti.isValidNumber()) {
@@ -70,8 +70,8 @@
 	} else { // `DOMContentLoaded` has already fired
 		initInternationalPhoneField();
 	}
-	
-	if (window.jQuery && window.jQuery.fn.entwine) { 
+
+	if (window.jQuery && window.jQuery.fn.entwine) {
 		jQuery.entwine("InternationalPhoneNumberField", function ($) {
 			$(":input.InternationalPhoneNumberField").entwine({
 				onmatch: function () {
