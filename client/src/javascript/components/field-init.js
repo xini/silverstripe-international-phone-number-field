@@ -1,3 +1,5 @@
+import intlTelInput from 'intl-tel-input';
+
 ;(function () {
 	'use strict';
 
@@ -41,7 +43,7 @@
 			// insert hidden field
 			field.parentElement.appendChild(hiddenField);
 
-			var iti = window.intlTelInput(field, {
+			var iti = intlTelInput(field, {
 				geoIpLookup: geoLookup,
 				initialCountry: initialCountry,
 				nationalMode: true,
