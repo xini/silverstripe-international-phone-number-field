@@ -2,14 +2,14 @@
 
 namespace Innoweb\InternationalPhoneNumberField\Forms;
 
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Forms\TextField;
 use SilverStripe\View\Requirements;
-use libphonenumber\NumberParseException;
-use libphonenumber\PhoneNumberFormat;
-use libphonenumber\PhoneNumberUtil;
 
 class InternationalPhoneNumberField extends TextField
 {
@@ -59,6 +59,13 @@ class InternationalPhoneNumberField extends TextField
      * @var string
      */
     protected $initialCountry;
+
+    /**
+     * Used to determine if the number given is in the correct format when validating
+     *
+     * @var mixed
+     */
+    protected $originalValue = null;
 
     public function __construct($name, $title = null, $value = '')
     {
@@ -148,42 +155,85 @@ class InternationalPhoneNumberField extends TextField
         return parent::Field($properties);
     }
 
+    public function setSubmittedValue($value, $data = null)
+    {
+        // Save original value
+        $this->originalValue = $value;
+
+        // Null case
+        if (strlen($value ?? '') === 0) {
+            $this->value = null;
+            return $this;
+        }
+
+        // Format number
+        $phoneUtil = PhoneNumberUtil::getInstance();
+        try {
+            $numberProto = $phoneUtil->parse($value, null);
+            if ($phoneUtil->isValidNumber($numberProto)) {
+                $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
+            } else {
+                $this->value = false;
+            }
+        } catch (NumberParseException $e) {
+            $this->value = false;
+        }
+        return $this;
+    }
+
+    public function Value()
+    {
+        // Show invalid value back to user in case of error
+        if ($this->value === null || $this->value === false) {
+            return $this->originalValue;
+        }
+        return $this->value;
+    }
+
     public function setValue($value, $data = null)
     {
-        if(empty($value)) {
+        $this->originalValue = $value;
+
+        if (strlen($value ?? '') === 0) {
             $this->value = null;
-        } else {
-            $phoneUtil = PhoneNumberUtil::getInstance();
-            try {
-                $numberProto = $phoneUtil->parse($value, null);
-                if ($phoneUtil->isValidNumber($numberProto)) {
-                    $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
-                }
-            } catch (NumberParseException $e) {
-                $this->value = $value;
+            return $this;
+        }
+
+        $phoneUtil = PhoneNumberUtil::getInstance();
+        try {
+            $numberProto = $phoneUtil->parse($value, null);
+            if ($phoneUtil->isValidNumber($numberProto)) {
+                $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
+            } else {
+                $this->value = false;
             }
+        } catch (NumberParseException $e) {
+            $this->value = null;
         }
         return $this;
     }
 
     public function validate($validator)
     {
+        $result = true;
         $phoneUtil = PhoneNumberUtil::getInstance();
-        if ($this->value) {
+        if ($this->value === false) {
+            $validator->validationError(
+                $this->name,
+                _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
+                'validation'
+            );
+            $result = false;
+        } elseif ($this->value) {
             try {
-                $this->value = trim($this->value);
-                if ($this->value) {
-                    $numberProto = $phoneUtil->parse($this->value, null);
-                    if ($phoneUtil->isValidNumber($numberProto)) {
-                        $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
-                    } else {
-                        $validator->validationError(
-                            $this->name,
-                            _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
-                            'validation'
-                        );
-                        return false;
-                    }
+                $numberProto = $phoneUtil->parse(trim($this->value), null);
+                if (!$phoneUtil->isValidNumber($numberProto)) {
+                    $validator->validationError(
+                        $this->name,
+                        _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
+                        'validation'
+                    );
+                    $result = false;
                 }
             } catch (NumberParseException $e) {
                 $validator->validationError(
@@ -191,10 +241,10 @@ class InternationalPhoneNumberField extends TextField
                     _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
                     'validation'
                 );
-                return false;
+                $result = false;
             }
         }
-        return true;
+        return $this->extendValidationResult($result, $validator);
     }
 
     public function getSchemaValidation()
@@ -203,5 +253,4 @@ class InternationalPhoneNumberField extends TextField
         $rules['internationalPhone'] = true;
         return $rules;
     }
-
 }

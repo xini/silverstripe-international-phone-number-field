@@ -10,12 +10,12 @@
   "author": "Florian Thoma",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "intl-tel-input": "^17.0.21",
-    "libphonenumber-js": "^1.11.7"
+    "intl-tel-input": "^24.5.0",
+    "libphonenumber-js": "^1.11.9"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
     "del": "^7.1.0",
     "gulp": "^5.0.0",
     "gulp-autoprefixer": "^9.0.0",
@@ -28,7 +28,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-strip-debug": "^6.0.0",
     "gulp-uglify": "^3.0.2",
-    "sass": "^1.78.0"
+    "sass": "^1.79.4"
   },
   "engines": {
     "node": "^18.0.0"

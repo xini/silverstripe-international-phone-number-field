@@ -55,7 +55,7 @@ import intlTelInput from 'intl-tel-input';
 
 			// Update hidden field value with phone number if correct, otherwise just copy value. Validation happens on server.
 			var handleChange = function() {
-				if (iti.isValidNumber()) {
+				if (iti.isValidNumber(false)) {
 					hiddenField.value = iti.getNumber();
 				} else {
 					hiddenField.value = field.value.trim();

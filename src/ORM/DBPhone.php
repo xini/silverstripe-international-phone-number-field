@@ -3,14 +3,13 @@
 namespace Innoweb\InternationalPhoneNumberField\ORM;
 
 use Innoweb\InternationalPhoneNumberField\Forms\InternationalPhoneNumberField;
-use SilverStripe\Core\Config\Config;
-use SilverStripe\ORM\DB;
-use SilverStripe\ORM\Connect\MySQLDatabase;
-use SilverStripe\ORM\FieldType\DBField;
-use InvalidArgumentException;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\ORM\Connect\MySQLDatabase;
+use SilverStripe\ORM\DB;
+use SilverStripe\ORM\FieldType\DBField;
 
 class DBPhone extends DBField
 {

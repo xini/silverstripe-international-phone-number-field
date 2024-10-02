@@ -1,3 +1,5 @@
+import { isValidPhoneNumber } from 'libphonenumber-js';
+
 ;(function () {
     'use strict';
 
@@ -7,11 +9,13 @@
             (function($) {
                 if ($.validator) {
                     $.validator.addMethod("internationalPhone", function(phone_number, element) {
-                        return this.optional(element)
-                            || $(element).intlTelInput("isValidNumber");
+                        if (phone_number.trim().length === 0 && this.optional(element)) {
+                            return true;
+                        }
+                        return isValidPhoneNumber(element.value)
                     }, "Please enter a valid phone number.");
                 }
-            }(jQuery));
+            })(window.jQuery);
         }
     }
 

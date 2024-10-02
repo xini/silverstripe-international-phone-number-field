@@ -6,7 +6,7 @@ import cleancss from 'gulp-clean-css';
 import { deleteSync } from 'del';
 import gulpif from 'gulp-if';
 import plumber from 'gulp-plumber';
-import dartSass from 'sass';
+import * as dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 const sass = gulpSass(dartSass);
 import sourcemaps from 'gulp-sourcemaps';

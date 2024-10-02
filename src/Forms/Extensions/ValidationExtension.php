@@ -2,9 +2,6 @@
 
 namespace Innoweb\InternationalPhoneNumberField\Forms\Extensions;
 
-use SilverStripe\Admin\LeftAndMain;
-use SilverStripe\Control\Controller;
-use SilverStripe\GraphQL\Controller as GraphQLController;
 use SilverStripe\Core\Extension;
 use SilverStripe\View\Requirements;
 
