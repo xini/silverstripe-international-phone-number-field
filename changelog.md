@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.3.0]
+
+* add inputmode=tel attribute
+* add editable form field for Userforms module
+
 ## [5.2.0]
 
 * update frontend dependencies
