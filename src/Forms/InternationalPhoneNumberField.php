@@ -120,6 +120,7 @@ class InternationalPhoneNumberField extends TextField
             parent::getAttributes(),
             array(
                 'type' => 'tel',
+                'inputmode' => 'tel',
                 'data-apiurl' => $IPLocationAPIURL,
                 'data-apireplykey' => $IPLocationReplyKey,
                 'data-initialcountry' => $initialCountry,
