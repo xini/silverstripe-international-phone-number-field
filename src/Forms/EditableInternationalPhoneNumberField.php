@@ -2,7 +2,6 @@
 
 namespace Innoweb\InternationalPhoneNumberField\Forms;
 
-use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FormField;
 use SilverStripe\UserForms\Model\EditableFormField;
 
@@ -11,11 +10,9 @@ if (!class_exists(EditableFormField::class)) {
 }
 
 /**
- * EditableEmailField
+ * EditableInternationalPhoneNumberField
  *
- * Allow users to define a validating editable email field for a UserDefinedForm
- *
- * @package userforms
+ * Allow users to define a validating editable phone number field for a UserDefinedForm
  */
 class EditableInternationalPhoneNumberField extends EditableFormField
 {
