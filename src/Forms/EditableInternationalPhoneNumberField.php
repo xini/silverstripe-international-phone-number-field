@@ -1,12 +1,14 @@
 <?php
 
-namespace SilverStripe\UserForms\Model\EditableFormField;
+namespace Innoweb\InternationalPhoneNumberField\Forms;
 
-use BurnBright\ExternalURLField\ExternalURLField;
-use Innoweb\InternationalPhoneNumberField\Forms\InternationalPhoneNumberField;
 use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FormField;
 use SilverStripe\UserForms\Model\EditableFormField;
+
+if (!class_exists(EditableFormField::class)) {
+    return;
+}
 
 /**
  * EditableEmailField
@@ -15,43 +17,41 @@ use SilverStripe\UserForms\Model\EditableFormField;
  *
  * @package userforms
  */
-if (class_exists(EditableFormField::class)) {
-    class EditableInternationalPhoneNumberField extends EditableFormField
+class EditableInternationalPhoneNumberField extends EditableFormField
+{
+    private static $singular_name = 'Phone Number Field';
+
+    private static $plural_name = 'Phone Number Fields';
+
+    private static $has_placeholder = true;
+
+    private static $table_name = 'EditableInternationalPhoneNumberField';
+
+    public function getSetsOwnError()
     {
-        private static $singular_name = 'Phone Number Field';
+        return true;
+    }
 
-        private static $plural_name = 'Phone Number Fields';
+    public function getFormField()
+    {
+        $field = InternationalPhoneNumberField::create($this->Name, $this->Title ?: false, $this->Default)
+            ->setFieldHolderTemplate(EditableFormField::class . '_holder')
+            ->setTemplate(EditableFormField::class);
 
-        private static $has_placeholder = true;
+        $this->doUpdateFormField($field);
 
-        private static $table_name = 'EditableInternationalPhoneNumberField';
+        return $field;
+    }
 
-        public function getSetsOwnError()
-        {
-            return true;
-        }
+    /**
+     * Updates a formfield with the additional metadata specified by this field
+     *
+     * @param FormField $field
+     */
+    protected function updateFormField($field)
+    {
+        parent::updateFormField($field);
 
-        public function getFormField()
-        {
-            $field = InternationalPhoneNumberField::create($this->Name, $this->Title ?: false, $this->Default)
-                ->setFieldHolderTemplate(EditableFormField::class . '_holder')
-                ->setTemplate(EditableFormField::class);
-
-            $this->doUpdateFormField($field);
-
-            return $field;
-        }
-
-        /**
-         * Updates a formfield with the additional metadata specified by this field
-         *
-         * @param FormField $field
-         */
-        protected function updateFormField($field)
-        {
-            parent::updateFormField($field);
-
-            $field->setAttribute('data-rule-internationalPhone', true);
-        }
+        $field->setAttribute('data-rule-internationalPhone', true);
     }
 }
