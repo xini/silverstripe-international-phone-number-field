@@ -1,1 +1,2 @@
-import "../../node_modules/intl-tel-input/build/js/utils.js";
+import utils from "../../node_modules/intl-tel-input/build/js/utils";
+export default utils;

@@ -78,7 +78,7 @@ function scripts(cb) {
                     browser: true
                 }),
                 commonjs()
-            ] }, 'iife'))
+            ] }, 'module'))
         .pipe(
             gulpif(
                 !debugEnabled,
