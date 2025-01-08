@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.3.4]
+
+* fix initialisation and validation for jQuery
+
 ## [5.3.3]
 
 * fix frontend build

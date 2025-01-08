@@ -10,6 +10,11 @@ import intlTelInput from 'intl-tel-input';
 
 		Array.prototype.forEach.call(fields, function (field) {
 
+            var initialised = field.getAttribute('data-initialised');
+            if (typeof initialised !== 'undefined' && initialised !== null) {
+                return;
+            }
+
 			// define geo lookup function
 			var geoLookup = null;
 			var initialCountry = field.getAttribute('data-initialcountry');
@@ -64,6 +69,8 @@ import intlTelInput from 'intl-tel-input';
 			field.addEventListener('change', handleChange);
 			field.addEventListener('keyup', handleChange);
 			field.addEventListener('blur', handleChange);
+
+            field.setAttribute('data-initialised', true);
 		});
 	}
 

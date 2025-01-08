@@ -9,10 +9,17 @@ import { isValidPhoneNumber } from 'libphonenumber-js';
             (function($) {
                 if ($.validator) {
                     $.validator.addMethod("internationalPhone", function(phone_number, element) {
-                        if (phone_number.trim().length === 0 && this.optional(element)) {
-                            return true;
+                        let hidden = $(element).closest('.field').find('input[type="hidden"]').first();
+                        if (typeof hidden !== 'undefined' && hidden !== null) {
+                            let value = hidden.val();
+                            if (value.length === 0 && this.optional(element)) {
+                                return true;
+                            }
+                            return isValidPhoneNumber(value);
+                        } else {
+                            console.error('internationalPhone: hidden field not found');
                         }
-                        return isValidPhoneNumber(element.value)
+                        return false;
                     }, "Please enter a valid phone number.");
                 }
             })(window.jQuery);
