@@ -11,7 +11,7 @@ IP Geo Location services supported:
 * [ipstack.com](https://ipstack.com)
 * [ipinfo.io](https://ipinfo.io)
 * [ipgeolocation](https://ipgeolocation.io/)
-* [ipapi](https://freegeoip.app/) (default)
+* [ipapi](https://ipapi.co/)
 
 ## Requirements
 
