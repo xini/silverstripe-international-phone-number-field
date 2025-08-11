@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.4.0]
+
+* remove support for defunct freegeoip
+* add support for ipapi.co
+* add support for loading default country code from user agent time zone settings
+
 ## [5.3.4]
 
 * fix initialisation and validation for jQuery

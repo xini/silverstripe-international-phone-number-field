@@ -15,13 +15,14 @@ class InternationalPhoneNumberField extends TextField
 {
     /**
      * @config
-     * @var String|false $geolocation_service IP location service to determine the current users's country code. This can be 'ipstack', 'ipinfo', 'ipgeolocation' or 'freegeoip'. Defaults to 'freegeoip'.
+     * @var String|false $geolocation_service Uses IP location to determine the current users's country code.
+     * This can be `'ipstack'`, `'ipinfo'`, `'ipgeolocation'`, `'ipapi'` or `false`. Defaults to `false`.
      */
-    private static $geolocation_service = 'freegeoip';
+    private static $geolocation_service = false;
 
     /**
      * @config
-     * @var String|false $geolocation_api_key API key for ipstack.com or ipinfo.io.
+     * @var String|false $geolocation_api_key API key for ipstack.com or ipinfo.io. Defaults to `false`.
      */
     private static $geolocation_api_key = false;
 
@@ -33,13 +34,24 @@ class InternationalPhoneNumberField extends TextField
 
     /**
      * @config
-     * @var String $initial_country Country code for initially shown country in the phone number field, e.g. 'au'. Defaults to 'auto', in which case the location is determined using geolocation if that's set up.
+     * @var String $initial_country Country code for initially shown country in the phone number field, e.g. 'au'.
+     * Defaults to 'auto', in which case the location is determined using geolocation if that's set up.
      */
     private static $initial_country = 'auto';
 
     /**
      * @config
-     * @var Array|false $only_countries Array of country codes available for selection. Defaults to false, all countries are listed.
+     * @var bool $load_default_from_user_agent Enable loading the default country from the user agent's timezone
+     * settings instead of a geo ip service. This is only used if `geolocation_service` is `false` and
+     * `initial_country` is `auto`.
+     * Defaults to `true`.
+     */
+    private static $load_default_from_user_agent = true;
+
+    /**
+     * @config
+     * @var Array|false $only_countries Array of country codes available for selection. Defaults to false, all
+     * countries are listed.
      */
     private static $only_countries = false;
 
@@ -102,8 +114,8 @@ class InternationalPhoneNumberField extends TextField
             } else if ($IPLocationService == 'ipgeolocation' && $IPLocationAPIKey) {
                 $IPLocationAPIURL = Controller::join_links($protocol.'://api.ipgeolocation.io/ipgeo', '?apiKey='.$IPLocationAPIKey);
                 $IPLocationReplyKey = 'country_code2';
-            } else if ($IPLocationService == 'freegeoip') {
-                $IPLocationAPIURL = Controller::join_links($protocol.'://freegeoip.app/json/');
+            } else if ($IPLocationService == 'ipapi') {
+                $IPLocationAPIURL = Controller::join_links($protocol.'://ipapi.co/json');
                 $IPLocationReplyKey = 'country_code';
             }
         }
@@ -149,7 +161,13 @@ class InternationalPhoneNumberField extends TextField
      */
     public function Field($properties = [])
     {
-        // load requirements
+        if ($this->config()->get('geolocation_service') === false
+            && $this->config()->get('initial_country') === 'auto'
+            && $this->config()->get('load_default_from_user_agent') === true
+        ) {
+            Requirements::javascript('innoweb/silverstripe-international-phone-number-field:client/dist/javascript/intl-phone-number-field-default-from-browser.js');
+        }
+
         Requirements::css('innoweb/silverstripe-international-phone-number-field:client/dist/css/intl-phone-number-field.css');
         Requirements::javascript('innoweb/silverstripe-international-phone-number-field:client/dist/javascript/intl-phone-number-field.js');
 

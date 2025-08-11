@@ -11,7 +11,7 @@ IP Geo Location services supported:
 * [ipstack.com](https://ipstack.com)
 * [ipinfo.io](https://ipinfo.io)
 * [ipgeolocation](https://ipgeolocation.io/)
-* [freegeoip](https://freegeoip.app/) (default)
+* [ipapi](https://freegeoip.app/) (default)
 
 ## Requirements
 
@@ -61,10 +61,11 @@ The `InternationalPhoneNumberField` can be used for any Varchar field storing a 
 
 To set the field to use the user's current location as default and customise the field, you can configure the following options for the `InternationalPhoneNumberField` class:
 
-* `geolocation_service`: Uses IP location to determine the current users's country code. This can be `'ipstack'`, `'ipinfo'`, `'ipgeolocation'` or `'freegeoip'`. Defaults to `'freegeoip'`.
+* `geolocation_service`: Uses IP location to determine the current users's country code. This can be `'ipstack'`, `'ipinfo'`, `'ipgeolocation'`, `'ipapi'` or `false`. Defaults to `false`.
 * `geolocation_api_key`: API key for [ipstack.com](https://ipstack.com), [ipinfo.io](https://ipinfo.io) or [ipgeolocation](https://ipgeolocation.io/). Defaults to `false`.
 * `geolocation_protocol`: Protocol to be used to connecto to geolocation service. Defaults to `'https'`.
 * `initial_country`: Country code for initially shown country in the phone number field. Defaults to `'auto'`, in which case the location is determined using geolocation if that's set up.
+* `load_default_from_user_agent`: Enable loading the default country from the user agent's timezone settings instead of a geo ip service. This is only used if `geolocation_service` is `false` and `initial_country` is `auto`. Defaults to `true`.
 * `only_countries`: Array of country codes available for selection. Defaults to `false`, all countries are listed.
 * `preferred_countries`: Array of country codes pushed to the top of the dropdown list. Defaults to `false`, all countries are listed alphabetically.
 * `excluded_countries`: Array of country codes to be excluded from the dropdown lost. Defaults to `false`, all countries are listed.

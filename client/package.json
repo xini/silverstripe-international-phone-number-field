@@ -10,14 +10,15 @@
   "author": "Florian Thoma",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "intl-tel-input": "^24.5.0",
-    "libphonenumber-js": "^1.11.9"
+    "countries-and-timezones": "^3.8.0",
+    "intl-tel-input": "^24.8.2",
+    "libphonenumber-js": "^1.12.10"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.0",
-    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^15.3.1",
     "del": "^7.1.0",
-    "gulp": "^5.0.0",
+    "gulp": "^5.0.1",
     "gulp-autoprefixer": "^9.0.0",
     "gulp-best-rollup-2": "^5.0.3",
     "gulp-clean-css": "^4.3.0",
@@ -28,7 +29,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-strip-debug": "^6.0.0",
     "gulp-uglify": "^3.0.2",
-    "sass": "^1.79.4"
+    "sass": "^1.90.0"
   },
   "engines": {
     "node": "^18.0.0"

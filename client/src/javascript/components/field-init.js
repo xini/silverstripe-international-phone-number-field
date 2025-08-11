@@ -18,24 +18,25 @@ import intlTelInput from 'intl-tel-input';
 			// define geo lookup function
 			var geoLookup = null;
 			var initialCountry = field.getAttribute('data-initialcountry');
-			if (
-				field.getAttribute('data-apiurl') && field.getAttribute('data-apiurl').length > 0
-				&& (typeof initialCountry === 'undefined' || initialCountry === 'auto')
-			) {
-				geoLookup = function(callback) {
-					var xhr = new XMLHttpRequest();
-					xhr.open('GET', field.getAttribute('data-apiurl'));
-					xhr.setRequestHeader("Accept", "application/json");
-					xhr.onload = function() {
-						if (xhr.status === 200) {
-							var json = JSON.parse(xhr.responseText);
-							var countryCode = (json && json[field.getAttribute('data-apireplykey')]) ? json[field.getAttribute('data-apireplykey')] : "";
-							callback(countryCode);
-						}
-					};
-					xhr.send();
-				};
-			}
+            if (typeof initialCountry === 'undefined' || initialCountry === 'auto') {
+                if (field.getAttribute('data-apiurl') && field.getAttribute('data-apiurl').length > 0) {
+                    geoLookup = function(callback) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('GET', field.getAttribute('data-apiurl'));
+                        xhr.setRequestHeader("Accept", "application/json");
+                        xhr.onload = function() {
+                            if (xhr.status === 200) {
+                                var json = JSON.parse(xhr.responseText);
+                                var countryCode = (json && json[field.getAttribute('data-apireplykey')]) ? json[field.getAttribute('data-apireplykey')] : "";
+                                callback(countryCode);
+                            }
+                        };
+                        xhr.send();
+                    };
+                } else if (typeof window.loadCountryFromBrowserTimeZone === 'function') {
+                    initialCountry = window.loadCountryFromBrowserTimeZone();
+                }
+            }
 
 			// create hidden field for data submission
 			var fieldname = field.getAttribute('name');
