@@ -7,12 +7,17 @@ use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\FormField;
+use SilverStripe\Model\ModelData;
 use SilverStripe\ORM\Connect\MySQLDatabase;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\FieldType\DBField;
 
 class DBPhone extends DBField
 {
+    private static array $field_validators = [
+        InternationalPhoneNumberField::class,
+    ];
 
     /**
      * Set the default value for "nullify empty"
@@ -28,7 +33,7 @@ class DBPhone extends DBField
      * (non-PHPdoc)
      * @see DBField::requireField()
      */
-    public function requireField()
+    public function requireField(): void
     {
         $charset = Config::inst()->get(MySQLDatabase::class, 'charset');
         $collation = Config::inst()->get(MySQLDatabase::class, 'collation');
@@ -49,7 +54,7 @@ class DBPhone extends DBField
         DB::require_field($this->tableName, $this->name, $values);
     }
 
-    public function setValue($value, $record = null, $markChanged = true)
+    public function setValue(mixed $value, null|array|ModelData $record = null, bool $markChanged = true): static
     {
         $phoneUtil = PhoneNumberUtil::getInstance();
         try {
@@ -69,14 +74,14 @@ class DBPhone extends DBField
      * (non-PHPdoc)
      * @see core/model/fieldtypes/DBField#exists()
      */
-    public function exists()
+    public function exists(): bool
     {
         $value = $this->RAW();
         // All truthy values and non-empty strings exist ('0' but not (int)0)
         return $value || (is_string($value) && strlen($value));
     }
 
-    public function scaffoldFormField($title = null, $params = null)
+    public function scaffoldFormField(?string $title = null, array $params = []): ?FormField
     {
         return InternationalPhoneNumberField::create($this->name, $title);
     }
