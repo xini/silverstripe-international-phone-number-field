@@ -10,9 +10,21 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Forms\TextField;
 use SilverStripe\View\Requirements;
+use Innoweb\InternationalPhoneNumberField\Validators\InternationalPhoneNumberFieldValidator;
 
 class InternationalPhoneNumberField extends TextField
 {
+    private static array $field_validators = [
+        InternationalPhoneNumberFieldValidator::class,
+    ];
+
+    private static array $casting = [
+        'International' => 'Text',
+        'National' => 'Text',
+        'E164' => 'Text',
+        'RFC3966' => 'Text',
+    ];
+
     /**
      * @config
      * @var String|false $geolocation_service Uses IP location to determine the current users's country code.
@@ -50,20 +62,20 @@ class InternationalPhoneNumberField extends TextField
 
     /**
      * @config
-     * @var Array|false $only_countries Array of country codes available for selection. Defaults to false, all
+     * @var array|false $only_countries Array of country codes available for selection. Defaults to false, all
      * countries are listed.
      */
     private static $only_countries = false;
 
     /**
      * @config
-     * @var Array|false $preferred_countries Array of country codes pushed to the top of the dropdown list. Defaults to false, all countries are listed alphabetically.
+     * @var array|false $preferred_countries Array of country codes pushed to the top of the dropdown list. Defaults to false, all countries are listed alphabetically.
      */
     private static $preferred_countries = false;
 
     /**
      * @config
-     * @var Array|false $excluded_countries Array of country codes to be excluded from the dropdown lost. Defaults to false, all countries are listed.
+     * @var array|false $excluded_countries Array of country codes to be excluded from the dropdown lost. Defaults to false, all countries are listed.
      */
     private static $excluded_countries = false;
 
@@ -230,40 +242,6 @@ class InternationalPhoneNumberField extends TextField
             $this->value = null;
         }
         return $this;
-    }
-
-    public function validate($validator)
-    {
-        $result = true;
-        $phoneUtil = PhoneNumberUtil::getInstance();
-        if ($this->value === false) {
-            $validator->validationError(
-                $this->name,
-                _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
-                'validation'
-            );
-            $result = false;
-        } elseif ($this->value) {
-            try {
-                $numberProto = $phoneUtil->parse(trim($this->value), null);
-                if (!$phoneUtil->isValidNumber($numberProto)) {
-                    $validator->validationError(
-                        $this->name,
-                        _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
-                        'validation'
-                    );
-                    $result = false;
-                }
-            } catch (NumberParseException $e) {
-                $validator->validationError(
-                    $this->name,
-                    _t('InternationalPhoneNumberField.VALIDATION', 'Please enter a valid phone number in international format, e.g. "+41 44 668 1800".'),
-                    'validation'
-                );
-                $result = false;
-            }
-        }
-        return $this->extendValidationResult($result, $validator);
     }
 
     public function getSchemaValidation()

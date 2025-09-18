@@ -3,16 +3,26 @@
 namespace Innoweb\InternationalPhoneNumberField\ORM;
 
 use Innoweb\InternationalPhoneNumberField\Forms\InternationalPhoneNumberField;
+use Innoweb\InternationalPhoneNumberField\Validators\InternationalPhoneNumberFieldValidator;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\FormField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Model\ModelData;
 use SilverStripe\ORM\Connect\MySQLDatabase;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\FieldType\DBField;
+use SilverStripe\ORM\FieldType\DBVarchar;
 
-class DBPhone extends DBField
+class DBPhone extends DBVarchar
 {
+    private static array $field_validators = [
+        InternationalPhoneNumberFieldValidator::class,
+    ];
+
+    private static $max_chars = 20;
 
     /**
      * Set the default value for "nullify empty"
@@ -21,14 +31,15 @@ class DBPhone extends DBField
      */
     public function __construct($name = null, $options = [])
     {
-        parent::__construct($name, $options);
+        $size = $this->config()->get('max_chars');
+        parent::__construct($name, $size, $options);
     }
 
     /**
      * (non-PHPdoc)
      * @see DBField::requireField()
      */
-    public function requireField()
+    public function requireField(): void
     {
         $charset = Config::inst()->get(MySQLDatabase::class, 'charset');
         $collation = Config::inst()->get(MySQLDatabase::class, 'collation');
@@ -49,7 +60,7 @@ class DBPhone extends DBField
         DB::require_field($this->tableName, $this->name, $values);
     }
 
-    public function setValue($value, $record = null, $markChanged = true)
+    public function setValue(mixed $value, null|array|ModelData $record = null, bool $markChanged = true): static
     {
         $phoneUtil = PhoneNumberUtil::getInstance();
         try {
@@ -69,16 +80,21 @@ class DBPhone extends DBField
      * (non-PHPdoc)
      * @see core/model/fieldtypes/DBField#exists()
      */
-    public function exists()
+    public function exists(): bool
     {
         $value = $this->RAW();
         // All truthy values and non-empty strings exist ('0' but not (int)0)
         return $value || (is_string($value) && strlen($value));
     }
 
-    public function scaffoldFormField($title = null, $params = null)
+    public function scaffoldFormField(?string $title = null, array $params = []): ?FormField
     {
         return InternationalPhoneNumberField::create($this->name, $title);
+    }
+
+    public function scaffoldSearchField(?string $title = null): ?FormField
+    {
+        return TextField::create($this->getName(), $title);
     }
 
     /**
@@ -86,20 +102,9 @@ class DBPhone extends DBField
      *
      * @return string
      */
-    public function International()
+    public function International(): ?string
     {
-        if (!$this->value) {
-            return null;
-        }
-        $phoneUtil = PhoneNumberUtil::getInstance();
-        try {
-            $numberProto = $phoneUtil->parse($this->value, null);
-            if ($phoneUtil->isValidNumber($numberProto)) {
-                return $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
-            }
-        } catch (NumberParseException $e) {
-            return $this->value;
-        }
+        return $this->getFormattedValue(PhoneNumberFormat::INTERNATIONAL);
     }
 
     /**
@@ -107,20 +112,9 @@ class DBPhone extends DBField
      *
      * @return string
      */
-    public function National()
+    public function National(): ?string
     {
-        if (!$this->value) {
-            return null;
-        }
-        $phoneUtil = PhoneNumberUtil::getInstance();
-        try {
-            $numberProto = $phoneUtil->parse($this->value, null);
-            if ($phoneUtil->isValidNumber($numberProto)) {
-                return $phoneUtil->format($numberProto, PhoneNumberFormat::NATIONAL);
-            }
-        } catch (NumberParseException $e) {
-            return $this->value;
-        }
+        return $this->getFormattedValue(PhoneNumberFormat::NATIONAL);
     }
 
     /**
@@ -128,20 +122,9 @@ class DBPhone extends DBField
      *
      * @return string
      */
-    public function E164()
+    public function E164(): ?string
     {
-        if (!$this->value) {
-            return null;
-        }
-        $phoneUtil = PhoneNumberUtil::getInstance();
-        try {
-            $numberProto = $phoneUtil->parse($this->value, null);
-            if ($phoneUtil->isValidNumber($numberProto)) {
-                return $phoneUtil->format($numberProto, PhoneNumberFormat::E164);
-            }
-        } catch (NumberParseException $e) {
-            return $this->value;
-        }
+        return $this->getFormattedValue(PhoneNumberFormat::E164);
     }
 
     /**
@@ -153,18 +136,7 @@ class DBPhone extends DBField
      */
     public function RFC3966()
     {
-        if (!$this->value) {
-            return null;
-        }
-        $phoneUtil = PhoneNumberUtil::getInstance();
-        try {
-            $numberProto = $phoneUtil->parse($this->value, null);
-            if ($phoneUtil->isValidNumber($numberProto)) {
-                return $phoneUtil->format($numberProto, PhoneNumberFormat::RFC3966);
-            }
-        } catch (NumberParseException $e) {
-            return $this->value;
-        }
+        return $this->getFormattedValue(PhoneNumberFormat::RFC3966);
     }
 
     /**
@@ -172,8 +144,28 @@ class DBPhone extends DBField
      *
      * @return string
      */
-    public function URL()
+    public function URL(): string
     {
-        return $this->RFC3966();
+        $value = $this->RFC3966();
+        return empty($value) ? 'tel:' : $value;
+    }
+
+    protected function getFormattedValue(int|PhoneNumberFormat $format): ?string
+    {
+        $value = $this->getValue();
+        if (empty($value)) {
+            return null;
+        }
+        try {
+            $phoneUtil = PhoneNumberUtil::getInstance();
+            $numberProto = $phoneUtil->parse($value);
+            if ($phoneUtil->isValidNumber($numberProto)) {
+                return $phoneUtil->format($numberProto, $format);
+            }
+        }
+        catch (NumberParseException $e) {
+            return $this->value;
+        }
+        return null;
     }
 }
