@@ -18,6 +18,13 @@ class InternationalPhoneNumberField extends TextField
         InternationalPhoneNumberFieldValidator::class,
     ];
 
+    private static array $casting = [
+        'International' => 'Text',
+        'National' => 'Text',
+        'E164' => 'Text',
+        'RFC3966' => 'Text',
+    ];
+
     /**
      * @config
      * @var String|false $geolocation_service Uses IP location to determine the current users's country code.
