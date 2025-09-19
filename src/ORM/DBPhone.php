@@ -66,7 +66,7 @@ class DBPhone extends DBVarchar
     {
         $phoneUtil = PhoneNumberUtil::getInstance();
         try {
-            $numberProto = $phoneUtil->parse($value, null);
+            $numberProto = $phoneUtil->parse($value ?? '', null);
             if ($phoneUtil->isValidNumber($numberProto)) {
                 $this->value = $phoneUtil->format($numberProto, PhoneNumberFormat::INTERNATIONAL);
             } else {
