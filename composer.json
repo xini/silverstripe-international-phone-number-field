@@ -11,7 +11,8 @@
 	"require":
 	{
 		"silverstripe/framework": "^6",
-		"giggsey/libphonenumber-for-php": "^8.13.7"
+		"silverstripe/vendor-plugin": "^3",
+		"giggsey/libphonenumber-for-php": "^9"
 	},
 	"replace": {
 		"xini/silverstripe-international-phone-number-field": "self.version"

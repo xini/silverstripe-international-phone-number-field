@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.0]
+
+* upgrade for Silverstripe 6
+* update to giggsey/libphonenumber-for-php 9
+
 ## [5.4.0]
 
 * remove support for defunct freegeoip

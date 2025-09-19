@@ -2,15 +2,16 @@
 
 namespace Innoweb\InternationalPhoneNumberField\Forms;
 
+use Innoweb\InternationalPhoneNumberField\Validators\InternationalPhoneNumberFieldValidator;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
+use Override;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Forms\TextField;
 use SilverStripe\View\Requirements;
-use Innoweb\InternationalPhoneNumberField\Validators\InternationalPhoneNumberFieldValidator;
 
 class InternationalPhoneNumberField extends TextField
 {
@@ -100,6 +101,7 @@ class InternationalPhoneNumberField extends TextField
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function Type()
     {
         return 'tel text';
@@ -108,6 +110,7 @@ class InternationalPhoneNumberField extends TextField
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAttributes()
     {
         // load data for template
@@ -118,31 +121,32 @@ class InternationalPhoneNumberField extends TextField
         if ($IPLocationService) {
             $protocol = Config::inst()->get(InternationalPhoneNumberField::class, 'geolocation_protocol') ?: 'https';
             if ($IPLocationService == 'ipstack' && $IPLocationAPIKey) {
-                $IPLocationAPIURL = Controller::join_links($protocol.'://api.ipstack.com', 'check', '?access_key='.$IPLocationAPIKey);
+                $IPLocationAPIURL = Controller::join_links($protocol . '://api.ipstack.com', 'check', '?access_key=' . $IPLocationAPIKey);
                 $IPLocationReplyKey = 'country_code';
-            } else if ($IPLocationService == 'ipinfo' && $IPLocationAPIKey) {
-                $IPLocationAPIURL = Controller::join_links($protocol.'://ipinfo.io', '?token='.$IPLocationAPIKey);
+            } elseif ($IPLocationService == 'ipinfo' && $IPLocationAPIKey) {
+                $IPLocationAPIURL = Controller::join_links($protocol . '://ipinfo.io', '?token=' . $IPLocationAPIKey);
                 $IPLocationReplyKey = 'country';
-            } else if ($IPLocationService == 'ipgeolocation' && $IPLocationAPIKey) {
-                $IPLocationAPIURL = Controller::join_links($protocol.'://api.ipgeolocation.io/ipgeo', '?apiKey='.$IPLocationAPIKey);
+            } elseif ($IPLocationService == 'ipgeolocation' && $IPLocationAPIKey) {
+                $IPLocationAPIURL = Controller::join_links($protocol . '://api.ipgeolocation.io/ipgeo', '?apiKey=' . $IPLocationAPIKey);
                 $IPLocationReplyKey = 'country_code2';
-            } else if ($IPLocationService == 'ipapi') {
-                $IPLocationAPIURL = Controller::join_links($protocol.'://ipapi.co/json');
+            } elseif ($IPLocationService == 'ipapi') {
+                $IPLocationAPIURL = Controller::join_links($protocol . '://ipapi.co/json');
                 $IPLocationReplyKey = 'country_code';
             }
         }
 
         $initialCountry = $this->getInitialCountry();
         if (!$initialCountry) {
-            $initialCountry = Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country') ? strtolower(Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country')) : "'auto'";
+            $initialCountry = Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country') ? strtolower((string) Config::inst()->get(InternationalPhoneNumberField::class, 'initial_country')) : "'auto'";
         }
+
         $onlyCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'only_countries') ? strtolower(implode('-', Config::inst()->get(InternationalPhoneNumberField::class, 'only_countries'))) : '';
         $preferredCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'preferred_countries') ? strtolower(implode('-', Config::inst()->get(InternationalPhoneNumberField::class, 'preferred_countries'))) : '';
         $excludedCountries = Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries') ? strtolower(implode('-', Config::inst()->get(InternationalPhoneNumberField::class, 'excluded_countries'))) : '';
 
         return array_merge(
             parent::getAttributes(),
-            array(
+            [
                 'type' => 'tel',
                 'inputmode' => 'tel',
                 'data-apiurl' => $IPLocationAPIURL,
@@ -152,13 +156,13 @@ class InternationalPhoneNumberField extends TextField
                 'data-preferredcountries' => $preferredCountries,
                 'data-excludedcountries' => $excludedCountries,
                 'data-utilsscripturl' => ModuleResourceLoader::resourceURL('innoweb/silverstripe-international-phone-number-field:client/dist/javascript/intl-phone-number-utils.js')
-            )
+            ]
         );
     }
 
     public function setInitialCountry($countryCode)
     {
-        $this->initialCountry = strtolower($countryCode);
+        $this->initialCountry = strtolower((string) $countryCode);
         return $this;
     }
 
@@ -171,6 +175,7 @@ class InternationalPhoneNumberField extends TextField
      * @param array $properties
      * @return string
      */
+    #[Override]
     public function Field($properties = [])
     {
         if ($this->config()->get('geolocation_service') === false
@@ -186,13 +191,14 @@ class InternationalPhoneNumberField extends TextField
         return parent::Field($properties);
     }
 
+    #[Override]
     public function setSubmittedValue($value, $data = null)
     {
         // Save original value
         $this->originalValue = $value;
 
         // Null case
-        if (strlen($value ?? '') === 0) {
+        if ((string) ($value ?? '') === '') {
             $this->value = null;
             return $this;
         }
@@ -206,9 +212,10 @@ class InternationalPhoneNumberField extends TextField
             } else {
                 $this->value = false;
             }
-        } catch (NumberParseException $e) {
+        } catch (NumberParseException) {
             $this->value = false;
         }
+
         return $this;
     }
 
@@ -218,14 +225,16 @@ class InternationalPhoneNumberField extends TextField
         if ($this->value === null || $this->value === false) {
             return $this->originalValue;
         }
+
         return $this->value;
     }
 
+    #[Override]
     public function setValue($value, $data = null)
     {
         $this->originalValue = $value;
 
-        if (strlen($value ?? '') === 0) {
+        if ((string) ($value ?? '') === '') {
             $this->value = null;
             return $this;
         }
@@ -238,12 +247,14 @@ class InternationalPhoneNumberField extends TextField
             } else {
                 $this->value = false;
             }
-        } catch (NumberParseException $e) {
+        } catch (NumberParseException) {
             $this->value = null;
         }
+
         return $this;
     }
 
+    #[Override]
     public function getSchemaValidation()
     {
         $rules = parent::getSchemaValidation();

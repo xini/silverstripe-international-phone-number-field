@@ -7,13 +7,13 @@ use Innoweb\InternationalPhoneNumberField\Validators\InternationalPhoneNumberFie
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
+use Override;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\FormField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Model\ModelData;
 use SilverStripe\ORM\Connect\MySQLDatabase;
 use SilverStripe\ORM\DB;
-use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBVarchar;
 
 class DBPhone extends DBVarchar
@@ -39,6 +39,7 @@ class DBPhone extends DBVarchar
      * (non-PHPdoc)
      * @see DBField::requireField()
      */
+    #[Override]
     public function requireField(): void
     {
         $charset = Config::inst()->get(MySQLDatabase::class, 'charset');
@@ -60,6 +61,7 @@ class DBPhone extends DBVarchar
         DB::require_field($this->tableName, $this->name, $values);
     }
 
+    #[Override]
     public function setValue(mixed $value, null|array|ModelData $record = null, bool $markChanged = true): static
     {
         $phoneUtil = PhoneNumberUtil::getInstance();
@@ -70,9 +72,10 @@ class DBPhone extends DBVarchar
             } else {
                 $this->value = null;
             }
-        } catch (NumberParseException $e) {
+        } catch (NumberParseException) {
             $this->value = null;
         }
+        
         return $this;
     }
 
@@ -80,6 +83,7 @@ class DBPhone extends DBVarchar
      * (non-PHPdoc)
      * @see core/model/fieldtypes/DBField#exists()
      */
+    #[Override]
     public function exists(): bool
     {
         $value = $this->RAW();
@@ -87,11 +91,13 @@ class DBPhone extends DBVarchar
         return $value || (is_string($value) && strlen($value));
     }
 
+    #[Override]
     public function scaffoldFormField(?string $title = null, array $params = []): ?FormField
     {
         return InternationalPhoneNumberField::create($this->name, $title);
     }
 
+    #[Override]
     public function scaffoldSearchField(?string $title = null): ?FormField
     {
         return TextField::create($this->getName(), $title);
@@ -144,6 +150,7 @@ class DBPhone extends DBVarchar
      *
      * @return string
      */
+    #[Override]
     public function URL(): string
     {
         $value = $this->RFC3966();
@@ -156,16 +163,17 @@ class DBPhone extends DBVarchar
         if (empty($value)) {
             return null;
         }
+        
         try {
             $phoneUtil = PhoneNumberUtil::getInstance();
             $numberProto = $phoneUtil->parse($value);
             if ($phoneUtil->isValidNumber($numberProto)) {
                 return $phoneUtil->format($numberProto, $format);
             }
-        }
-        catch (NumberParseException $e) {
+        } catch (NumberParseException) {
             return $this->value;
         }
+        
         return null;
     }
 }
