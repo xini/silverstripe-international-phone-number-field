@@ -56,7 +56,7 @@ import intlTelInput from 'intl-tel-input';
 				onlyCountries: field.getAttribute('data-onlycountries') ? field.getAttribute('data-onlycountries').split('-') : [],
 				preferredCountries: field.getAttribute('data-preferredcountries') ? field.getAttribute('data-preferredcountries').split('-') : [],
 				excludeCountries: field.getAttribute('data-excludedcountries') ? field.getAttribute('data-excludedcountries').split('-') : [],
-				utilsScript: field.getAttribute('data-utilsscripturl'),
+				loadUtils: () => import(field.getAttribute('data-utilsscripturl'))
 			});
 
 			// Update hidden field value with phone number if correct, otherwise just copy value. Validation happens on server.
