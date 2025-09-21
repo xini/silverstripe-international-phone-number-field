@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.1]
+
+* Fix passing null to string arg in libphone parser (thanks @dizzystuff)
+
 ## [6.0.0]
 
 * upgrade for Silverstripe 6
