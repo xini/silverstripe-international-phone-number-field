@@ -1,0 +1,21 @@
+name: Create release from tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+      
+jobs:
+  createreleasefropmtag:
+    name: Create release from tag
+    # Only run cron on innoweb accounts
+    if: github.repository_owner == 'xini' || github.repository_owner == 'innowebau'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Essential for authentication
+        run: gh release create "$GITHUB_REF_NAME" --repo="$GITHUB_REPOSITORY" --generate-notes --fail-on-no-commits

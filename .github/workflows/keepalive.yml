@@ -1,0 +1,21 @@
+name: Keepalive
+
+on:
+  # At 2:17 AM UTC, on day 7 of the month
+  schedule:
+    - cron: '17 2 7 * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  keepalive:
+    name: Keepalive
+    # Only run cron on the innoweb accounts
+    if: (github.event_name == 'schedule' && (github.repository_owner == 'xini' || github.repository_owner == 'innowebau')) || (github.event_name != 'schedule')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Keepalive
+        uses: silverstripe/gha-keepalive@v1
