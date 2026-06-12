@@ -70,6 +70,20 @@ To set the field to use the user's current location as default and customise the
 * `preferred_countries`: Array of country codes pushed to the top of the dropdown list. Defaults to `false`, all countries are listed alphabetically.
 * `excluded_countries`: Array of country codes to be excluded from the dropdown lost. Defaults to `false`, all countries are listed.
 
+## Initialising fields added after page load
+
+By default, phone number fields are initialised once the page has loaded. Fields added to the page after that (for example in dynamically loaded modal or popup content) are not initialised.
+
+To enable automatic initialisation of dynamically added fields, apply the extension to the appropriate controller, most likely `PageController`:
+
+```yml
+PageController:
+  extensions:
+    - Innoweb\InternationalPhoneNumberField\Forms\Extensions\ObserveDynamicFieldsExtension
+```
+
+This loads the field's assets on every page and watches the document for phone number fields being added, initialising each one as it appears. Fields present at page load continue to be initialised exactly as before.
+
 ## License
 
 BSD 3-Clause License, see [License](license.md)
