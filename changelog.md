@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.0]
+
+* Initialise phone number fields added after page load (thanks, @dizzystuff)
+* Switch frontend build from gulp to node build script, update dependencies
+
 ## [6.0.2]
 
 * Fix loading of phone field utils to fix number formatting
