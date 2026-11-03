@@ -10,13 +10,15 @@ import ct from 'countries-and-timezones';
             && Intl.DateTimeFormat().resolvedOptions().timeZone
         ) {
             const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            const userCountry = ct.getCountryForTimezone(userTimeZone);
-            if (typeof userCountry !== 'undefined'
-                && userCountry !== null
-                && !Array.isArray(userCountry)
-                && Object.prototype.toString.call(userCountry) === '[object Object]'
-            ) {
-                return userCountry.id;
+            if (typeof ct.getCountryForTimezone === 'function') {
+                const userCountry = ct.getCountryForTimezone(userTimeZone);
+                if (typeof userCountry !== 'undefined'
+                    && userCountry !== null
+                    && !Array.isArray(userCountry)
+                    && Object.prototype.toString.call(userCountry) === '[object Object]'
+                ) {
+                    return userCountry.id;
+                }
             }
         }
         return false;

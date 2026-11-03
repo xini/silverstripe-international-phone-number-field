@@ -84,6 +84,10 @@ PageController:
 
 This loads the field's assets on every page and watches the document for phone number fields being added, initialising each one as it appears. Fields present at page load continue to be initialised exactly as before.
 
+## Frontend development
+
+In `client`, use Node.js 24 and run `npm ci` to install dependencies. Run `npm run build` to build the JavaScript and CSS, or `npm run watch` to rebuild when source files change. `npm run debug` watches with unminified JavaScript; `npm run js` and `npm run css` build individual asset types. Run `npm test` for a build smoke test.
+
 ## License
 
 BSD 3-Clause License, see [License](license.md)

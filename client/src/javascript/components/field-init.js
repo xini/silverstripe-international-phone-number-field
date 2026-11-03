@@ -55,9 +55,9 @@ export function initInternationalPhoneField(scope = document) {
 			var iti = intlTelInput(field, {
 				geoIpLookup: geoLookup,
 				initialCountry: initialCountry,
-				nationalMode: true,
-				onlyCountries: field.getAttribute('data-onlycountries') ? field.getAttribute('data-onlycountries').split('-') : [],
-				preferredCountries: field.getAttribute('data-preferredcountries') ? field.getAttribute('data-preferredcountries').split('-') : [],
+                numberDisplayFormat: "NATIONAL",
+                onlyCountries: field.getAttribute('data-onlycountries') ? field.getAttribute('data-onlycountries').split('-') : [],
+				countryOrder: field.getAttribute('data-preferredcountries') ? field.getAttribute('data-preferredcountries').split('-') : null,
 				excludeCountries: field.getAttribute('data-excludedcountries') ? field.getAttribute('data-excludedcountries').split('-') : [],
 				loadUtils: () => import(field.getAttribute('data-utilsscripturl'))
 			});
